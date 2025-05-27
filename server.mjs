@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const securePort = process.env.PORT || 3443;
 
 const app = express();
-
+ 
 app.use(session({
     secret: process.env.SESSION_SEC,
     resave: false,
