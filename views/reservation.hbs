@@ -1,0 +1,34 @@
+<article>
+    <h2>Reservation</h2>
+    <div class="reserv-details">
+        <form action="/reservation" method="post" enctype="application/x-www-form-urlencoded">
+            <label for="checkIn">Check-in Date</label>
+            <input type="date" id="checkin" name="checkIn" required>
+            <label for="checkOut">Check-out Date</label>
+            <input type="date" id="checkout" name="checkOut" required>
+            <label for="spacesType">Space Type</label>
+            <select name="spacesType" id="spaces-type" required>
+                {{#each zone}}
+                <option id="option" value="{{name}}" data-max-spaces={{numOfZones}} data-max-people={{maxPeople}}>{{name}}</option>
+                {{/each}}
+            </select>
+            <label for="spaceNo">Number of Spaces</label>
+            <input type="number" name="spaceNo" id="space-no" min="1" value="1" required>
+            <label for="peopleNo">Number of People</label>
+            <input type="number" id="people-no" name="peopNo" min="1" value="1" required>  
+            <input type="submit" id="search" value="Search">
+        </form>
+    </div>
+    {{#each result}}
+        <div class="availability-result">
+            <img src="images/main_image.jpg" alt="camping">
+            <div class="reservation-info">
+                <p>Check-In: {{checkin}}</p>
+                <p>Check-Out: {{checkout}}</p>
+                <p>Space Type: {{spacetype}}</p>
+                <p>Number of Spaces: {{spacenum}}</p>
+                <p>Number of People: {{peoplenum}}</p>
+                <p>{{price}}</p>
+            </div>
+    {{/each}}
+</article>

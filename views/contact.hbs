@@ -1,0 +1,44 @@
+<main class="cont-main">
+    <article class="contact-cont">
+        <div>
+            <h2 id="conth">Contact</h2>
+        </div>
+        <form id="contactForm">
+            <fieldset>
+                <legend style="margin-left: 10px;">Προσωπικά Στοιχεία</legend>
+                <p id="mesage-text" style="margin-left: 10px;">Συμπληρώστε τα στοιχεία επικοινωνίας σας...</p>
+                <label for="fname" >Όνομα</label>
+                <input type="text" id="fname" name="fname" required>
+                <label for="lname">Επίθετο</label>
+                <input type="text" id="lname" name="lname" required>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+                <label for="telephone">Τηλέφωνο</label>
+                <input type="tel" id="telephone" name="telephone" required>
+            </fieldset>
+            <fieldset>
+                <legend style="margin-left: 10px;">Μήνυμα</legend>
+                <input type="text" id="subject" placeholder="Θέμα" name="sub" required>
+                <textarea name="minima" id="minima" placeholder="Κείμενο Μηνύματος"></textarea>
+                <button type="submit" id="submit">Υποβολή</button>
+            </fieldset>
+        </form>
+        <style>
+            fieldset{
+                border: 1px solid black;
+                margin: 10px;
+            }
+        </style>
+    </article>
+    <article class="addr-camp">
+        <p>email: camping.hmty@gmail.gr </p><p>Address:  Apollon Camping, Delphi 33054, Fokida, Greece </p><p>Tel.: +30 22650 83392</p>
+    </article>
+    <div class="container-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d99942.50808639111!2d22.3934965!3d38.4829488!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135f7982b69df595%3A0xcca415250f9c4417!2sBungalow%20-%20Camping%20Apollon%20Hotel!5e0!3m2!1sel!2sgr!4v1742291238518!5m2!1sel!2sgr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</main>
+<style>
+    footer{
+        margin: 0;
+    }
+</style>

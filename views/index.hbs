@@ -1,0 +1,94 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<section class="header-section">
+    <h1>Camping Apollon Delphi</h1>
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/images/main_image.jpg" class="d-block w-100" alt="Camping Apollon Delphi">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Camping Apollon Delphi</h5>
+                            <p>Μια μοναδική εμπειρία κατασκήνωσης στους Δελφούς</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/images/bungallow.jpg" class="d-block w-100" alt="Μπανγκαλόου">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Ξύλινα Μπανγκαλόου</h5>
+                            <p>Πολυτελείς καταλύματα παραδοσιακής αρχιτεκτονικής</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/images/conection-image.jpg" class="d-block w-100" alt="Σύνδεση">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Σύγχρονες Εγκαταστάσεις</h5>
+                            <p>Όλες οι ανέσεις για μια άνετη διαμονή</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/images/delphi-view-img.jpg" class="d-block w-100" alt="Δελφοί">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Θέα στους Δελφούς</h5>
+                            <p>Μοναδική θέα στον αρχαιολογικό χώρο και τον Κορινθιακό κόλπο</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Προηγούμενο</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Επόμενο</span>
+                </button>
+            </div>
+    <div class="m-text-con">
+        <p id="main-text">Το Camping Apollon βρίσκεται στην είσοδο του μαγευτικού χωριού των Δελφών, σε απόσταση μόλις ενός χιλιομέτρου από τον αρχαιολογικό χώρο! Περιλαμβάνει σύγχρονες εγκαταστάσεις πισίνας και γηπέδων, καθώς και εστιατόριο με θέα τον ελαιώνα της Άμφισσας και τον Κορινθιακό κόλπο! Τέλος, διαθέτει χώρους για σκηνές, τροχόσπιτα, καθώς και Bungalow παραδοσιακής αρχιτεκτονικής, θέλοντας να καλύψει τις ανάγκες κάθε επισκέπτη και κατασκηνωτή!</p>
+    </div>
+    <a href="/reservation"><button class="book-button">Κράτηση Τώρα</button></a>
+</section>
+
+<section class="services-section" id="services-sec">
+    <h2>Υπηρεσίες</h2>
+    <div class="ser-container">
+        {{#each services}}
+        <div class="ser-item">
+            <img class="serv-img" src="{{image}}" alt="{{alt}}">
+            <p class="serv-text">{{text}}</p>
+        </div>
+        {{/each}}
+    </div>
+</section>
+
+<style>
+    footer{
+        margin: 0;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = new bootstrap.Carousel(document.getElementById('mainCarousel'), {
+            interval: 5000, 
+            pause: 'hover' 
+        });
+        
+        
+        const bookBtn = document.querySelector('.book-button');
+        setTimeout(() => {
+            bookBtn.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                bookBtn.style.transform = 'scale(1)';
+            }, 300);
+        }, 1000);
+    });
+
+</script>
