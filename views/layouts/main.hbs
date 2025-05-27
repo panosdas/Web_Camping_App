@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {{#each css}}
+        <link rel="stylesheet" href="/css/{{this}}">
+    {{/each}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {{#each script}}
+        <script src="/scripts/{{this}}" defer></script>
+    {{/each}}
+</head>
+<body>
+    {{> navbar}}
+
+    {{{body}}} 
+
+    {{> footer}}
+
+
+</body>
+</html>
