@@ -1,7 +1,8 @@
 {
   "name": "project",
   "version": "1.0.0",
-  "main": "adminPage.js",
+  "type": "module",
+  "main": "server.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "bcrypt": "^5.1.1",
