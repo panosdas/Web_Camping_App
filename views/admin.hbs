@@ -1,0 +1,155 @@
+<main>
+    <div class="header-section admin-header">
+        <h1>Σελίδα Διαχειριστή</h1>
+        <a href="/logout">έξοδος</a>
+        <h2>-Camping Apollon Delphi-</h2>
+    </div>
+    <div class="ser-container dashboard">
+        <a href="#reservation">
+            <div class="ser-item">
+                προβολή κρατήσεων
+            </div>
+        </a>
+        <a href="#availability">
+            <div class="ser-item">
+                Αλλαγή Διαθεσιμότητας
+            </div>
+        </a>
+        <a href="#zoneManagement">
+            <div class="ser-item">
+                Διαχείριση Χώρων
+            </div>
+        </a>
+        <a href="#visitors">
+            <div class="ser-item">
+                Επισκέπτες
+            </div>
+        </a>
+    </div>
+    <div class="management-container">
+        <div class="callendar management-item">
+            <div class="callendarHeader">
+                <h3>Ημερολόγιο</h3>
+                <h4></h4>
+            </div>
+            <div class="callendarBox"></div>
+            <button class="callendarLtButton">&lt-</button>
+            <button class="callendarGtButton">-&gt</button>
+            <select id="yearSelect">
+            </select>
+        </div>
+        <div id="reservation" class="management-item">
+            <h3>Κρατήσεις Σήμερα</h3>
+            <table id="reservationList" class="table-list">
+                <tr>
+                    <th>όνομα</th>
+                    <th>χώρος</th>
+                    <th>άτομα</th>
+                    <th>check-in</th>
+                    <th>check-out</th>
+                    <th>Συνολική Τιμή</th>
+                    <th id="editReservation"><button>επεξεργασία</button></th>
+                </tr>
+            </table>
+            <button data-show="false">προσθήκη κράτησης</button>
+            <form class="admin-form" id="addReservation" method="POST" onsubmit="return checkDate()" action="/admin/addReservation" >
+                    <fieldset>
+                        <legend>προσθήκη Κράτησης</legend>
+                        <label for="email">email Πελάτη</label>
+                        <input name="email"type="text" id="email" pattern="[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+" required>
+                        <label for="zoneType">τύπος χώρου</label>
+                        <select name="zoneType" id="zoneType"></select>
+                        <label for="zoneNum">αριθμός χώρων</label>
+                        <input name="zoneNum" id="zoneNum" type="number" value="1" required>
+                        <label for="people">αριθμός ατόμων</label>
+                        <input name="people" id="zoneNum" type="number" value="1" required>
+                        <label for="checkIn">check-in</label>
+                        <input name="checkIn" type="date" id="checkIn" required>
+                        <label for="checkOut">check-out</label>
+                        <input name="checkOut" type="date" id="checkOut" required>
+                        <input type="submit" value="προσθήκη">
+                    </fieldset>
+                </form>
+        </div>
+        <div id="availability" class="management-item">
+            <h3>Διαθεσιμότητα Σήμερα</h3>
+            <div id="canvasContainer">
+            </div>
+            <table id="availabilityTable"class="table-list">
+                <tr>
+                    <th>Χώρος</th>
+                    <th>Διαθεσιμότητα</th>
+                </tr>
+            </table>
+            {{!-- <button id="changeAvailabilityButton">Αλλαγή Διαθεσιμότητας</button>
+            <form class="admin-form" id="changeAvailabilityForm" data-display="false">
+                <fieldset>
+                    <legend>Διαθεσιμότητα</legend>
+                    <label for="availabilitySelect">Χώρος:</label>
+                    <select name="zone" id="availabilitySelect">
+                        <option value="">...</option>
+                        <option value="A">Α</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <label for="numberAvailability" id="numberAvailabilityText">Aριθμός:</label>
+                    <input name="availability" id="numberAvailability" type="number" min="0">
+                    <input name="date" type="hidden">
+                    <input type="submit" value="συνέχεια">
+                </fieldset>
+            </form> --}}
+        </div>
+        <div id="zoneManagement" class="management-item">
+            <h3>Διαχείριση Χώρων</h3>
+            <div>
+                <table id="zoneList" class="table-list">
+                </table>
+                <button id="addZoneToggle">προσθήκη χώρου</button>
+                <form class="admin-form" id="addZone" method="POST" action="/admin/addZone" >
+                    <fieldset>
+                        <legend>προσθήκη χώρου</legend>
+                        <label for="zoneName">Όνομα Χώρου</label>
+                        <input name="name"type="text" id="zoneName" required>
+                        <label for="defaultPeople">Προκαθορισμένος αριθμός ατόμων</label>
+                        <input name="defaultPeople" type="number" id="defaultPeople" required>
+                        <label for="maxPeople">Μέγιστος αριθμός ατόμων</label>
+                        <input name="maxPeople" type="number" id="maxPeople" required>
+                        <label for="additionalChargePerPerson">Έξτρα χρέσωση ανά άτομο</label>
+                        <input name="additionalChargePerPerson" type="text" id="additionalChargePerPerson" required>
+                        <label for="highSeasonPrice">Τιμή υψηλής περιόδου</label>
+                        <input name="highSeasonPrice" type="text" id="highSeasonPrice" required>
+                        <label for="lowSeasonPrice">Τιμή χαμηλής περιόδου</label>
+                        <input name="lowSeasonPrice" type="text" id="lowSeasonPrice" required>
+                        <label for="numOfZones">Συνολικός αριθμός χώρων</label>
+                        <input name="numOfZones"type="number" id="numOfZones" required>
+                        <input type="submit" value="προσθήκη">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div id="visitors" class="management-item">
+                <h3>Επισκέπτες</h3>
+                <div id="visitorSearch">
+                    <label for="visitorSearchIn">Αναζήτηση Επισκέπτη:</label>
+                    <input type="text" id="visitorSearchIn">
+                    <button>Αναζήτηση</button>
+                </div>
+                <table id="visitorList" class="table-list"></table>
+                <button data-show="false"> προσθήκη Επισκέπτη </button>
+                <form class="admin-form" id="addVisitor" method="POST" action="/admin/addVisitor" >
+                    <fieldset>
+                        <legend>προσθήκη Επισκέπτη</legend>
+                        <label for="firstName">Όνομα</label>
+                        <input name="firstName"type="text" id="firstName">
+                        <label for="lastName">Επίθετο</label>
+                        <input name="lastName" type="text" id="lastName">
+                        <label for="email">email</label>
+                        <input name="email" type="text" id="email">
+                        <label for="telephoneNumber">τηλέφωνο</label>
+                        <input name="telephoneNumber" type="text" id="telephoneNumber">
+                        <input type="submit" value="προσθήκη">
+                    </fieldset>
+                </form>
+        </div>
+    </div>
+	</main>
