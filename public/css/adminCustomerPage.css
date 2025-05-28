@@ -1,0 +1,124 @@
+.admin-header h2{
+	font-size: 20px;
+}
+.dashboard div{
+	width: 120px;
+	height: 100px;
+	margin-top: 20px;
+}
+.management-container{
+	background-color: #eceaea;
+}
+.management-item{
+	background-color: #ffffff;
+}
+
+.admin-form fieldset{
+	display:grid;
+	grid-template-columns:1fr 1fr;
+	grid-template-rows:auto;
+	/* text-align:end; */
+	align-items:center;
+	/* margin:auto; */
+	width:50%
+	
+}
+.admin-form input{
+	margin:5px;
+}
+.admin-form input[type="radio"]{
+	height: auto;
+}
+.admin-form input[type="submit"]{
+	grid-column:2;
+}
+#changeAvailabilityForm{
+	display: none;
+}
+.table-list{
+	/* border: 2px solid #A2A0A0;; */
+	width: 50%;
+	margin:auto;
+}
+.table-list td,th{
+	background-color: #CCCACA;
+	text-align: center;
+	width: 150px;
+	height: 30px;
+}
+.table-list td{
+	background-color: #eceaea;
+}
+.dashboard a{
+	color:#000000;
+	text-decoration: none;
+}
+button{
+	color: #fff;
+    background-color: #000;
+    width: auto;
+    height: 35px;
+    font-size: 1.2em;
+    font-family: cursive;
+    border-radius: 10px;
+    transition: 50ms;
+}
+#addZone{
+	display: none;
+}
+#addZoneToggle{
+	margin-top:10px;
+	margin-bottom:10px;
+	width:auto;
+}
+.callendarBox{
+	display: grid;
+	grid-template-columns: repeat(7,auto);
+	width: 75%;
+	gap: 0px 0px;
+	padding:1px;
+	border:1px solid black;
+	/* margin:10px; */
+	/* grid-template-rows: auto; */
+
+}
+.callendarBox>div{
+	padding: 5px;
+	text-align: right;
+	width: auto;
+	height: 75px;
+	border:1px solid black;
+	background-color: #eceaea;
+}
+.callendarBox>span{
+	text-align: center;
+	font-weight: bold;
+	width: auto;
+	height: 30px;
+	border:1px solid black;
+	background-color: #d0cece;
+}
+.callendarBox>.today{
+	font-size: 18px;
+	font-weight: bold;
+}
+#piCanvas{
+	background-color: #AAAAAA;
+	width: 175px;
+	height: 175px;
+}
+#canvasContainer{
+	display:flex;
+	margin-left:10%;
+	margin-right:5%;
+	flex-wrap:wrap;
+}
+td input[type="text"]{
+	width: 8em;
+}
+td a:visited{
+	color:blue;
+}
+#addVisitor,#addReservation{
+	display: none;
+}
