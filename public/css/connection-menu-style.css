@@ -72,3 +72,17 @@ body {
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+@media (max-width:600px) {
+  .login-container{
+    width: 90%;
+    margin-bottom: 20%;
+    margin-top: 60px;
+  }
+
+  .login-container h2, label, input, .alert-danger{
+    width: 90%;
+    height: 30px;
+  }
+
+}

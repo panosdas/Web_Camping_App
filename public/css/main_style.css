@@ -17,6 +17,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     object-fit: fill;
     margin: 0;
+    justify-content: center;
 }
 
 .nav-bar {
@@ -97,6 +98,22 @@ body {
         display: block;
         padding: 12px 0;
     }
+
+    #contactForm {
+        width: 86%;
+    }
+
+    #contactForm #subject{
+        width: 93%;
+    }
+
+    #contactForm #minima{
+        width: 93%;
+    }
+     #contactForm button{
+        width: 175%;
+    }
+
 }
 
 .header-section {
