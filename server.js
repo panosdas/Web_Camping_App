@@ -46,7 +46,7 @@ app.use("/",router);
 
 // Εκκίνηση server
 
-https
+/* https
    .createServer(
       {
          key: fs.readFileSync('./private.key'),
@@ -57,6 +57,10 @@ https
    .listen(securePort, () => {
       console.log(`Η εφαρμογή τρέχει στο https://127.0.0.1:${securePort}/`);
    });
+ */
 
 
-
+const port = process.env.PORT || '3000';
+app.listen(port, () => {
+    console.log(`http://127.0.0.1:${port}`);
+});
