@@ -54,7 +54,7 @@ https
       },
       app
    )
-   .listen(securePort, () => {
+   .listen(securePort, '0.0.0.0', () => {
       console.log(`Η εφαρμογή τρέχει στο https://127.0.0.1:${securePort}/`);
 });
  
