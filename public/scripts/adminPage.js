@@ -1,16 +1,20 @@
 let reservations=[];
 let zones=[];
 let visitors=[];
-const dpr=window.devicePixelRatio;
-let lastDate;
-document.addEventListener("DOMContentLoaded",async ()=>{
+const dpr=window.devicePixelRatio;//for the <canvas> to appear better
+let lastDate;//έχει τιμή την τελευταία ημερομηνία που επέλεξε ο χρήστης
+document.addEventListener("DOMContentLoaded",async ()=>{//code to be executed as soon as DOM is loaded
 	console.log("main");
 	curCalMonth=(new Date()).getMonth();
-	makeCallendar(curCalMonth);
+	makeCallendar(curCalMonth);//δημιουργία του ημερολογίου για τον τρέχων μήνα
+
+	//φόρτωση των zones/reservations και visitors από την βάση δεδομένων κάνοντας ένα https request στον server με χρήση fetch API
 	zones=await refreshZones();
 	reservations=await refreshReservations();
 	lastDate=document.querySelector(".today").getAttribute("data-date");
-	visitors=await refreshVisitors();	
+	visitors=await refreshVisitors();
+	
+	//για την δυνατότητα επιλογής της χρονιάς στο ημερολόγιο από τον χρήστη
 	let yearSelect=document.querySelector("#yearSelect");
 	document.querySelector(".callendarLtButton").addEventListener("click",async ()=>{
 		if(curCalMonth>0)
@@ -30,6 +34,8 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 	// 		form.style.display="none";
 	// 	}
 	// });
+
+	//τα παρακάτω αφορούν το κουμπί "Επεξεργασία" του πίνακα Κρατήσεις
 	let editToggle=false;
 	document.querySelector("#editReservation button").addEventListener("click",()=>{
 		console.log("edit");
@@ -85,6 +91,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 			document.querySelector("#reservation .saveButton").remove();
 		}
 	});
+	//λειτουργικότητα κουμπιού προσθήκης τύπου ζώνης
 	let addZoneToggle=true;
 	document.querySelector("#addZoneToggle").addEventListener("click",()=>{
 		if(!addZoneToggle){
@@ -95,6 +102,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 			document.querySelector("#addZone").style.display="block";
 		}
 	});
+	//"Γέμισμα" των πινάκων με βάση τα δέδομένα από το database
 	fillReservations();
 	await fillAvailability();
 	// document.querySelector("#changeAvailabilityForm input[type=hidden]").value=new Date().toISOString().split("T")[0];
@@ -114,6 +122,9 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 });
 
 function addReservation(reserv,toggle=false){
+//συνάρτηση για την προσθήκη κράτησης στον πίνακα. 
+// //Έχει arguments ένα object reserv το οποίο περιέχει πληροφορίες για την κράτηση και το 
+// toggle όπου αν είναι true εμφανίζει τις πληροφορίες μέσα σε input για την επεξεργασία τους από τον χρήστη
 	let row=document.createElement("tr");
 	let nameColumn=document.createElement("td");
 
@@ -160,10 +171,12 @@ function addReservation(reserv,toggle=false){
 			selectZone.appendChild(tempOption);
 		}
 		selectZone.addEventListener("change",(event)=>{
-			let idSelect=document.querySelector("#reservationList select[name=zoneNum]");
-			deleteTable("#reservationList select[name=id] option");
+			let idSelect=event.target.parentElement.querySelector("select[name=zoneNum]");
+			let oldOptions=event.target.parentElement.querySelectorAll("select[name=zoneNum] option");
+			for(let i=0;i<oldOptions.length;i++)
+				oldOptions[i].remove();
+
 			let max=0;
-			
 			for(let i=0;i<zones.length;i++){
 				if(zones[i].name==event.target.value){
 					max=zones[i].numOfZones;
@@ -255,6 +268,7 @@ function addReservation(reserv,toggle=false){
 }
 
 function makeCallendar(month,year=(new Date()).getFullYear()){//0 JAN 1 FEB 2 MARCH etc
+	//δημιουργία ημερολογίου για τον μήνα month και την χρονιά year
 	let daysInMonth=10;
 	if(month%2===0)//if month even
 		if(month<7)
@@ -286,12 +300,13 @@ function makeCallendar(month,year=(new Date()).getFullYear()){//0 JAN 1 FEB 2 MA
 	for(let i=1;i<daysInMonth+1+tempDate;i++){
 		let temp=document.createElement("div");
 		if(i>tempDate){
+			//το ternary op έχει προστεθεί στο month και στο day διότι σε περίπτωση που οι τιμές αυτές είναι μικρότερες του 10 εμφανίζονται ως απλό νούμερο πχ ΜΑΙΟΣ->5 αντί για 05 που χρησιμοποιεί η sqllite 
 			temp.setAttribute("data-date",`${year}-${((month+1)/10<1)? ("0"+(month+1)):(month+1)}-${((i-tempDate)>10)? (i-tempDate):("0"+(i-tempDate))}`);
 			temp.innerHTML=i-tempDate;
 			if(isToday(new Date(`${year}-${month+1}-${i-tempDate}`))){
 				temp.classList.add("today");
 			}
-			temp.addEventListener("click",async (event)=>{
+			temp.addEventListener("click",async (event)=>{//κώδικας που έκτελείται όταν επιλέγετε μια ημερομηνία
 				let dateAttr=event.currentTarget.getAttribute("data-Date");
 				lastDate=dateAttr;
 				let date=new Date(dateAttr);
@@ -340,14 +355,14 @@ function makeCallendar(month,year=(new Date()).getFullYear()){//0 JAN 1 FEB 2 MA
 		makeCallendar(month,selectYear.value);
 	});
 }
-function isToday(date){
+function isToday(date){//επιστρέφει true αν η ημερομηνία που περνάμε σαν όρισμα είναι η σημερινινή
 	let todayDate=new Date();
 	return date.getDate()===todayDate.getDate() && date.getMonth()===todayDate.getMonth() && date.getFullYear()===todayDate.getFullYear();
 }
-function isLeapYear(year){
+function isLeapYear(year){//επιστρέφει true αν το έτος είναι δίσεκτο
 	return year%4===0 && year%100!=0 ? true : (year%400===0? true: false);
 }
-function makePie(canvas,con,max){
+function makePie(canvas,con,max){//δημιουργεί ένα δίχρωμο γράφημα "Πίτας" στον κανβά canvas. Το ένα χρώμα θα αντιστοιχεί στο ποσοστό con/max και το άλλο στο 1-con/max 
 	let ctx=canvas.getContext("2d");
 	let point={x:canvas.width/(2*dpr),y:canvas.height/(2*dpr)};
 	ctx.scale(dpr,dpr);
@@ -373,7 +388,7 @@ function makePie(canvas,con,max){
 		ctx.stroke();
 	}
 }
-async function fillAvailability(date=document.querySelector(".today").getAttribute("data-date")){
+async function fillAvailability(date=document.querySelector(".today").getAttribute("data-date")){//Γέμισμα του πίνακα διαθεσιμότητας και των γραφημάτων
 	let pieContainer=document.querySelector("#canvasContainer");
 	let availabilityTable=document.querySelector("#availability>.table-list");
 	let availabilities=await fetch("/admin/getAvailabilities",{
@@ -415,7 +430,7 @@ async function fillAvailability(date=document.querySelector(".today").getAttribu
 		availabilityTable.appendChild(tr);
 	}
 }
-function fillZoneTable(){
+function fillZoneTable(){//γεμισμα του πίνακα zone
 	let zoneTable=document.querySelector("#zoneManagement .table-list");
 	let trHead=document.createElement("tr");
 	for(let j in zones[0]){
@@ -544,7 +559,7 @@ function fillZoneTable(){
 		zoneTable.appendChild(tr);
 	}
 }
-function fillVisitorsTable(){
+function fillVisitorsTable(){//Γέμισμα του πίνακα επισκεπτών
 	let table=document.querySelector("#visitorList");
 	let visitorInfo=Object.keys(visitors[0]);
 	let trHead=document.createElement("tr");
@@ -638,9 +653,9 @@ function fillVisitorsTable(){
 						body:JSON.stringify(vis)
 					});
 					// let vitor=await response.json();
+					document.querySelector("#visitors .saveButton").remove();
 					deleteTable("#visitorList tr");
 					visitors=await refreshVisitors();
-					document.querySelector("#visitors .save-button").remove();
 					fillVisitorsTable();
 				}
 			});
@@ -671,18 +686,18 @@ function deleteVisitorTable(){
 		children2delete[0].remove();
 	}
 }
-function deleteTable(tableSelector){
+function deleteTable(tableSelector){//διαγράφει όλα τα στοιχεία με selector tableSelector
 	let tr2delete=document.querySelectorAll(tableSelector);
 	for(let i=0;i<tr2delete.length;i++){
 		tr2delete[i].remove();
 	}
 }
-function fillReservations(){
+function fillReservations(){//Γέμισμα του πίνακα κρατήσεων
 	for(let i=0;i<reservations.length;i++){
 		addReservation(reservations[i]);
 	}
 }
-async function searchVisitor(){
+async function searchVisitor(){//αναζήτηση επισκέπτη με βάση το όνομα ή το email και ανανέωση του πίνακα επισκεπτών για να εμφανίζεται αυτός
 	let query=document.querySelector("#visitorSearchIn").value
 	if(query===""/* || query.split(" ").length!=2*/){
 		visitors=await refreshVisitors();
@@ -703,8 +718,10 @@ async function searchVisitor(){
 
 		fillVisitorsTable();
 	}
+	if(document.querySelector("#visitors .saveButton")!=null)
+		document.querySelector("#visitors .saveButton").remove();
 }
-async function refreshZones() {
+async function refreshZones() {//αναζητά όλα τα zoneType από την βάση και τα στοιχεία τους
 	const response=await fetch("admin/getZones",{
 	method:"POST",
 	headers:{
@@ -715,7 +732,7 @@ async function refreshZones() {
 	return zones;
 }
 
-async function refreshReservations(date=document.querySelector(".today").getAttribute("data-date")) {
+async function refreshReservations(date=document.querySelector(".today").getAttribute("data-date")) {//αναζητα στην βάση όλες τις κρατήσης που είναι ένεργες την ημερομηνία date
 	const response=await fetch("admin/getReservations",{
 		method:"POST",
 		headers:{
@@ -727,7 +744,7 @@ async function refreshReservations(date=document.querySelector(".today").getAttr
 	return reservations;
 }
 
-async function refreshVisitors() {
+async function refreshVisitors() {//αναζητά στην βάση όλους τους επισκέπτες
 	const response=await fetch("admin/getVisitors",{
 		method:"POST",
 		headers:{
@@ -737,7 +754,7 @@ async function refreshVisitors() {
 	let visitors=await response.json();
 	return visitors;
 }
-async function getSpecificVisitor(event) {
+async function getSpecificVisitor(event) {//αναζητά στην βάση τον επισκέπτη με id:email και ανανεώνει τον πίνακα έτσι ώστε να εμφανίζεται αυτός
 	let email=event.currentTarget.getAttribute("data-email");
 	const response=await fetch(`/admin/visitors/${email}`,{
 		method:"POST",
@@ -752,7 +769,7 @@ async function getSpecificVisitor(event) {
 	fillVisitorsTable();
 }
 
-function showAddVisitorForm(event){
+function showAddVisitorForm(event){//εμφανίζει την φόρμα προσθήκη επισκέπτη
 	let toggle=event.target.getAttribute("data-show")=="false"? false :true;
 	if(!toggle){
 		document.querySelector("#addVisitor").style.display="block";
@@ -762,7 +779,7 @@ function showAddVisitorForm(event){
 	toggle=!toggle;
 	event.target.setAttribute("data-show",toggle);
 }
-function showAddResForm(event){
+function showAddResForm(event){//εμφανίζει την φόρμα προσθήκη κράτησης
 	let toggle=event.target.getAttribute("data-show")=="false"? false :true;
 	let tempDate=new Date();
 	document.querySelector("#checkIn").setAttribute("value",`${tempDate.getFullYear()}-${(tempDate.getMonth()>10)?tempDate.getMonth()+1:"0".concat("",tempDate.getMonth()+1)}-${tempDate.getDate()}`);
@@ -774,7 +791,7 @@ function showAddResForm(event){
 	toggle=!toggle;
 	event.target.setAttribute("data-show",toggle);
 }
-function checkDate(){
+function checkDate(){//επιστρέφει true αν η τιμή τους checkIn είναι μικρότερη της τιμής του checkOut
 	if(new Date(document.querySelector("#checkIn").value)>new Date(document.querySelector("#checkOut").value)){
 		alert("Η ημερομηνία check out δεν μπορεί να είναι πριν την ημερομηνία check in");
 		return false;
