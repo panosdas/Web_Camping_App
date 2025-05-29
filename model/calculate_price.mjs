@@ -63,7 +63,7 @@ export let calculate_total_price = (checkin, checkout, people, spacenum, spacety
   
     totalPrice += extraPeopleCharge;
 
-    return totalPrice.toFixed(2);
+    return parseFloat(totalPrice.toFixed(2));
 };
 
 export default calculate_total_price;
