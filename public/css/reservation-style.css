@@ -82,7 +82,7 @@
 
 #search {
     grid-column: 1 / -1;
-    width: 100%;
+    width: 97%;
     height: 50px;
     border-radius: var(--border-radius);
     font-family: var(--font-family-secondary);
@@ -136,8 +136,12 @@ input{
 select {
     height: 70px;
     border-radius: 10px;
-    width: 270px;
+    width: 120%;
     font-size: 20px;
+}
+
+#spaces-type {
+    width: 97% !important;
 }
 
 footer {
