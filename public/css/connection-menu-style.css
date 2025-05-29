@@ -75,14 +75,14 @@ body {
 
 @media (max-width:600px) {
   .login-container{
-    width: 84%;
+    width: 78%;
     margin-bottom: 20%;
     margin-top: 60px;
   }
 
   .login-container h2, label, input, .alert-danger{
-    width: 90%;
-    height: 30px;
+    width: 80%;
+    height: 25px;
   }
 
 }
