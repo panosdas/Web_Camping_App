@@ -73,11 +73,15 @@ body {
     border-color: #ebccd1;
 }
 
-@media (max-width:600px) {
+@media (max-width:700px) {
   .login-container{
     width: 78%;
-    margin-bottom: 20%;
+    margin-bottom: 30%;
     margin-top: 60px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50%;
   }
 
   .login-container h2, label, input, .alert-danger{

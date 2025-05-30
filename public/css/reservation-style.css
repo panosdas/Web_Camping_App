@@ -115,16 +115,23 @@ article h2 {
         margin: 25px;
     }
 
+    body {
+        font-size: 13px;
+    }
+
     input,label,select {
         width: 75%;
     }
 
-    select {
-        width: 100% !important;
-    }
 
     article h2 {
         font-size: 24px;
+    }
+    input[type="submit"] {
+        width: 100% !important;
+    }
+    #spaces-type {
+        width: 120% !important;
     }
 }
 
@@ -180,10 +187,13 @@ body {
     border-radius: var(--border-radius);
 }
 
-@media (max-width: 800px){
+@media (max-width: 850px){
     .availability-result p{
-        font-size: 18px;
+        font-size: 13px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         margin-left: 20px;
+    }
+    .availability-result{
+        height: 220px;
     }
 }
